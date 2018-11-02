@@ -67,7 +67,7 @@
                     busdata: false,
                 },
 
-                input: ""
+                input: "Enter a bus stop code"
 
             }
         },
