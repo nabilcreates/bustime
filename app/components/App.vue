@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    // var appconfig = require("../package.json")
+    var appconfig = require("../package.json")
 
     export default {
         data() {
@@ -109,7 +109,7 @@
 
         mounted() {
 
-            // this.getAppVersion()
+            this.app.version = appconfig.version
             this.getBusStopData()
         }
 
