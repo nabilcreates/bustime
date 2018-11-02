@@ -52,11 +52,14 @@
 
             busstoptap(args) {
                 var busstopnum = this.busstopdata[args.index].no
+                var busstopname = this.busstopdata[args.index].name
+
                 this.$navigateTo(BusTiming,
 
                     {
                         props: {
                             'busstopnumber': busstopnum,
+                            'busstopname': busstopname,
                         }
                     }
 

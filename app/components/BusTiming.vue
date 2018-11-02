@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar :title="'Bus Timings For: ' + busstopnumber" class="action-bar" />
+        <ActionBar :title="busstopname + ' (' +busstopnumber + ')'" class="action-bar" />
 
         <StackLayout>
             <!--Add your page content here-->
@@ -48,7 +48,7 @@
 
     export default {
 
-        props: ['busstopnumber'],
+        props: ['busstopnumber' , 'busstopname'],
         
         data() {
             return {
