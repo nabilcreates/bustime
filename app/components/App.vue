@@ -5,9 +5,13 @@
         <StackLayout>
             <!--Add your page content here-->
 
-            <TextField v-model="input" @textChange="verifyInput()" hint="Enter a bus stop code" />
+            <TextField v-model="input" hint="Enter a bus stop code" />
 
-            <Button @tap="getBusStopData()"> Back </Button>
+            <!-- BUTTON -->
+            <Button @tap="verifyInput()"> Update Bus Times </Button>
+            
+            <!-- BUTTON -->
+            <Button @tap="getBusStopData()"> Bus Stop List </Button>
 
             <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px" v-if="app.mode == 'search' && loaded.busstopdata">
                 <v-template>
@@ -145,6 +149,7 @@
     }
 
     Button {
+        margin: 5 0;
         color: white;
         background-color: #e24747;
         border-radius: 1000;
