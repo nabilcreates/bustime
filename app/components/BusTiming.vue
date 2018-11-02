@@ -18,7 +18,7 @@
                                 <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
                                 <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
                                 <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                                <Label v-else text="🕗 Arriving" class="list-group-item-heading own-header" />
+                                <Label v-else text="🕗 Arriving" class="list-group-item-heading" />
 
                                 <!-- BUS FEATURE -->
                                 <Label v-if="bus.next.feature == 'WAB'" textWrap="true" class="list-group-item-heading">☑️ Wheelchair </Label>
@@ -37,7 +37,7 @@
                     </ListView>
 
                     <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-                    <Label v-else>Loading.. </Label>
+                    <!-- <Label v-else>Loading...</Label> -->
                 </StackLayout>
 
 
