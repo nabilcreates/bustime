@@ -13,7 +13,7 @@
                     v-if="app.mode == 'search' && loaded.busstopdata">
                     <v-template>
                         <FlexboxLayout flexDirection="row" class="list-group-item">
-                            <Label :text="busstop.name" class="list-group-item-heading" style="width: 60%" />
+                            <Label :text="busstop.name" class="list-group-item-heading"  />
                         </FlexboxLayout>
                     </v-template>
                 </ListView>
@@ -23,11 +23,11 @@
                     <v-template>
 
                         <StackLayout flexDirection="row" class="list-group-item">
-                            <Label :text="bus.no" class="list-group-item-heading" style="width: 60%" />
+                            <Label :text="bus.no" class="list-group-item-heading"  />
                             <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading" style="width: 60%">{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
+                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading" >{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
                             <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                            <Label v-else text="    Arriving" />
+                            <Label v-else text="Arriving" class="list-group-item-heading"  />
 
                         </StackLayout>
 
