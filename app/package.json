@@ -3,6 +3,6 @@
     "v8Flags": "--expose_gc"
   },
   "main": "main",
-  "name": "sgbusnow",
+  "name": "Bustime",
   "version": "0.1.2u"
 }
