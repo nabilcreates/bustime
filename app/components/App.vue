@@ -29,6 +29,8 @@
 
                     </v-template>
                 </ListView>
+                <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
+                <Label v-else>Loading... </Label>
 
             </StackLayout>
 
