@@ -9,7 +9,7 @@
 
                 <Button @tap="refreshList">Refresh</Button>
                 
-                <ListView class="list-group" for="bus in busdata.services" v-if="app.mode == 'view_bus' && loaded.busdata">
+                <ListView class="list-group" for="bus in busdata.services" @itemTap="tapBus" v-if="app.mode == 'view_bus' && loaded.busdata">
                     <v-template>
 
                         <StackLayout class="list-group-item">
@@ -51,6 +51,8 @@
 
 <script>
     var appconfig = require("../package.json")
+    import BusInfo from './BusInfo.vue'
+import BusInfoVue from './BusInfo.vue';
 
     export default {
 
@@ -76,6 +78,17 @@
 
         methods: {
 
+            tapBus(args){
+                console.log(args.index)
+
+                this.$navigateTo(BusInfo , {
+                    props: {
+                        'busstopnumber': this.busstopnumber,
+                        'index': args.index,
+                    }
+                })
+            },
+            
             getBusStopTiming(number) {
 
                 console.log(number)
