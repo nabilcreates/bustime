@@ -1,11 +1,11 @@
 <template>
-    <Page class="page">
+    <Page>
         <ActionBar :title="app.title + ' ' + app.version" class="action-bar" />
 
-        <StackLayout class="home-panel">
+        <StackLayout>
             <!--Add your page content here-->
 
-            <TextField v-model="input" @textChange="verifyInput()" />
+            <TextField v-model="input" @textChange="verifyInput()" hint="Enter a bus stop code" />
 
             <Button @tap="getBusStopData()"> Back </Button>
 
@@ -67,7 +67,7 @@
                     busdata: false,
                 },
 
-                input: "Enter a bus stop code"
+                input: ""
 
             }
         },
@@ -114,7 +114,7 @@
                         this.loaded.busdata = true
 
                     })
-            }
+            },
 
         },
 
@@ -128,29 +128,36 @@
 </script>
 
 <style scoped>
-    Page {
-        background: #161616;
 
+    /* PCOLOR: #e24747 */
+
+    .list-group-item-heading{
+        color: #161616;
     }
-
+    
     StackLayout {
-        color: white;
-        margin: 0 5;
+        margin: 0 10;
+
     }
 
     ActionBar {
-        background-color: #53ba82;
+        background-color: #e24747;
         color: #ffffff;
     }
 
     Button {
-        background-color: #53ba82;
+        color: white;
+        background-color: #e24747;
         border-radius: 1000;
-        color: #161616;
     }
 
     .own-header {
-        color: #53ba82;
+        color: #e24747;
         font-weight: 700;
     }
+
+    TextField{
+        margin: 5 0;
+    }
+    
 </style>
