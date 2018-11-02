@@ -1,6 +1,6 @@
 <template>
     <Page class="page">
-        <ActionBar title="Home" class="action-bar" />
+        <ActionBar :title="app.title + ' ' + app.version" class="action-bar" />
 
             <StackLayout class="home-panel">
                 <!--Add your page content here-->
@@ -43,7 +43,7 @@
             return {
 
                 app: {
-                    title: "sgbusnow",
+                    title: "",
                     version: "",
                     mode: "?"
                 },
@@ -108,7 +108,7 @@
         },
 
         mounted() {
-
+            this.app.title = appconfig.name
             this.app.version = appconfig.version
             this.getBusStopData()
         }
