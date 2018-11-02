@@ -19,7 +19,7 @@
 
                             <!-- BUS TIMING -->
                             <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
+                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
                             <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
                             <Label v-else text="🕗 Arriving" class="list-group-item-heading" />
 

@@ -90,7 +90,7 @@
     }
 
     Button {
-        margin: 5 0;
+        margin: 10 0;
         color: white;
         background-color: #e24747;
         border-radius: 1000;
