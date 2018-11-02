@@ -32,7 +32,7 @@
                         <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms
                             / 60000) + ' Mins' }}</Label>
                         <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                        <Label v-else text="Arriving" class="list-group-item-heading" />
+                        <Label v-else text="Arriving" class="list-group-item-heading own-header" />
 
                     </StackLayout>
 
@@ -128,13 +128,12 @@
 </script>
 
 <style scoped>
-
     /* PCOLOR: #e24747 */
 
-    .list-group-item-heading{
+    .list-group-item-heading {
         color: #161616;
     }
-    
+
     StackLayout {
         margin: 0 10;
 
@@ -149,15 +148,16 @@
         color: white;
         background-color: #e24747;
         border-radius: 1000;
+        height: 38;
     }
 
     .own-header {
         color: #e24747;
+        font-size: 18;
         font-weight: 700;
     }
 
-    TextField{
+    TextField {
         margin: 5 0;
     }
-    
 </style>
