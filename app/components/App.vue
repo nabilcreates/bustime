@@ -8,42 +8,10 @@
             <TextField v-model="input" hint="Enter a bus stop code" />
 
             <!-- BUTTON -->
-            <Button @tap="verifyInput()"> Update Bus Times </Button>
-            
-            <!-- BUTTON -->
-            <Button @tap="getBusStopData()"> Bus Stop List </Button>
+            <Button @tap="navigateToBusTiming(input)"> Get Bus Times </Button>
 
-            <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px" v-if="app.mode == 'search' && loaded.busstopdata">
-                <v-template>
-                    <StackLayout flexDirection="row" class="list-group-item">
 
-                        <!-- BUS STOP NAME -->
-                        <Label :text="busstop.name" class="list-group-item-heading own-header" />
-
-                        <!-- BUS STOP NUMBER -->
-                        <Label :text="busstop.no" class="list-group-item-heading" />
-
-                    </StackLayout>
-                </v-template>
-            </ListView>
-
-            <ListView class="list-group" for="bus in busdata.services" style="height:1250px" v-if="app.mode == 'view_bus' && loaded.busdata">
-                <v-template>
-
-                    <StackLayout flexDirection="row" class="list-group-item">
-                        <Label :text="bus.no" class="list-group-item-heading own-header" />
-                        <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                        <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms
-                            / 60000) + ' Mins' }}</Label>
-                        <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                        <Label v-else text="Arriving" class="list-group-item-heading own-header" />
-
-                    </StackLayout>
-
-                </v-template>
-            </ListView>
-            <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-            <Label v-else>Loading... </Label>
+            <Button @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
         </StackLayout>
 
@@ -52,6 +20,9 @@
 
 <script>
     var appconfig = require("../package.json")
+
+    import BusStopList from './BusStopList.vue'
+    import BusTiming from './BusTiming.vue'
 
     export default {
         data() {
@@ -63,7 +34,6 @@
                     mode: "?"
                 },
 
-                busstopdata: [],
                 busdata: [],
 
                 loaded: {
@@ -71,61 +41,38 @@
                     busdata: false,
                 },
 
-                input: ""
+                input: "",
+
+                components: {
+                    BusStopList,
+                }
 
             }
         },
 
         methods: {
 
-            verifyInput() {
-                if (this.input == "") {
-                    this.getBusStopData()
-                } else {
-                    this.getBusStopTiming(this.input)
-                }
+            navigateToBusTiming(busstop) {
+                this.$navigateTo(BusTiming, {
+                    props: {
+                        'busstopnumber': busstop,
+                    }
+                })
             },
 
-            getBusStopData() {
-
-                this.app.mode = "search"
-                this.loaded.busstopdata = false;
-
-                fetch("https://busrouter.sg/data/2/bus-stops.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        this.busstopdata = json
-                        this.loaded.busstopdata = true;
-                    })
+            navigateToBusStopList(){
+                this.$navigateTo(BusStopList)
             },
-
-            busstoptap(args) {
-                var busstopnum = this.busstopdata[args.index].no
-                console.log(busstopnum)
-                this.getBusStopTiming(busstopnum)
-            },
-
-            getBusStopTiming(number) {
-
-                this.app.mode = "view_bus"
-                this.loaded.busdata = false
-
-                fetch("https://arrivelah.herokuapp.com/?id=" + number)
-                    .then(response => response.json())
-                    .then(json => {
-                        console.log(json)
-                        this.busdata = json
-                        this.loaded.busdata = true
-
-                    })
-            },
+            
+            getAppInfo() {
+                this.app.title = appconfig.name
+                this.app.version = appconfig.version
+            }
 
         },
 
         mounted() {
-            this.app.title = appconfig.name
-            this.app.version = appconfig.version
-            this.getBusStopData()
+            this.getAppInfo()
         }
 
     }
