@@ -2,6 +2,10 @@
 
 > Bus Timing App 
 
+# Features
+-   All Bus Stop Data (Gets all the bus stop data)
+-   Fast & Simple
+
 ## Usage
 
 ``` bash
