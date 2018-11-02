@@ -10,7 +10,8 @@
             <!-- BUTTON -->
             <Button @tap="navigateToBusTiming(input)"> Get Bus Times </Button>
 
-
+            <Label class="or-divider"> OR </Label>
+            
             <Button @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
         </StackLayout>
@@ -32,13 +33,6 @@
                     title: "",
                     version: "",
                     mode: "?"
-                },
-
-                busdata: [],
-
-                loaded: {
-                    busstopdata: false,
-                    busdata: false,
                 },
 
                 input: "",
@@ -112,4 +106,10 @@
     TextField {
         margin: 5 0;
     }
+
+
+    .or-divider{
+        text-align: center;
+    }
+    
 </style>
