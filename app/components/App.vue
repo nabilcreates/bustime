@@ -2,50 +2,83 @@
     <Page>
         <ActionBar :title="app.title + ' ' + app.version" class="action-bar" />
 
-        <StackLayout>
-            <!--Add your page content here-->
 
-            <TextField v-model="input" hint="Enter a bus stop code" />
+        <TabView android:tabBackgroundColor="#e24747" android:tabTextColor="#c4ffdf" android:selectedTabTextColor="#ffffff"
+            androidSelectedTabHighlightColor="#ffffff">
+            <TabViewItem title="Manual">
+                <StackLayout class="padong">
+                    <TextField v-model="input" hint="Enter a bus stop code" />
 
-            <!-- BUTTON -->
-            <Button @tap="verifyInput()"> Update Bus Times </Button>
-            
-            <!-- BUTTON -->
-            <Button @tap="getBusStopData()"> Bus Stop List </Button>
+                    <!-- BUTTON -->
+                    <Button @tap="verifyInput()"> Update Bus Times </Button>
 
-            <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px" v-if="app.mode == 'search' && loaded.busstopdata">
-                <v-template>
-                    <StackLayout flexDirection="row" class="list-group-item">
+                    <ListView class="list-group" for="bus in busdata.services" style="height:1250px" v-if="app.mode == 'view_bus' && loaded.busdata">
+                        <v-template>
 
-                        <!-- BUS STOP NAME -->
-                        <Label :text="busstop.name" class="list-group-item-heading own-header" />
+                            <StackLayout flexDirection="row" class="list-group-item">
+                                <Label :text="bus.no" class="list-group-item-heading own-header" />
+                                <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                                <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms
+                                    / 60000) + ' Mins' }}</Label>
+                                <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                                <Label v-else text="Arriving" class="list-group-item-heading own-header" />
 
-                        <!-- BUS STOP NUMBER -->
-                        <Label :text="busstop.no" class="list-group-item-heading" />
+                            </StackLayout>
 
-                    </StackLayout>
-                </v-template>
-            </ListView>
+                        </v-template>
+                    </ListView>
 
-            <ListView class="list-group" for="bus in busdata.services" style="height:1250px" v-if="app.mode == 'view_bus' && loaded.busdata">
-                <v-template>
+                </StackLayout>
+            </TabViewItem>
 
-                    <StackLayout flexDirection="row" class="list-group-item">
-                        <Label :text="bus.no" class="list-group-item-heading own-header" />
-                        <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                        <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms
-                            / 60000) + ' Mins' }}</Label>
-                        <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                        <Label v-else text="Arriving" class="list-group-item-heading own-header" />
+            <TabViewItem title="Bus Stop List">
+                <StackLayout>
 
-                    </StackLayout>
+                    <!-- BUTTON -->
+                    <Button @tap="getBusStopData()"> Bus Stop List </Button>
 
-                </v-template>
-            </ListView>
-            <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-            <Label v-else>Loading... </Label>
+                    <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px"
+                        v-if="app.mode == 'search' && loaded.busstopdata">
+                        <v-template>
+                            <StackLayout flexDirection="row" class="list-group-item">
 
-        </StackLayout>
+                                <!-- BUS STOP NAME -->
+                                <Label :text="busstop.name" class="list-group-item-heading own-header" />
+
+                                <!-- BUS STOP NUMBER -->
+                                <Label :text="busstop.no" class="list-group-item-heading" />
+
+                            </StackLayout>
+                        </v-template>
+                    </ListView>
+
+                    <Label v-else>Go To Previous Tab </Label>
+
+                    
+                    <!-- <ListView class="list-group" for="bus in busdata.services" style="height:1250px" v-if="app.mode == 'view_bus' && loaded.busdata"> -->
+                        <!-- <v-template> -->
+
+                            <!-- <StackLayout flexDirection="row" class="list-group-item"> -->
+                                <!-- <Label :text="bus.no" class="list-group-item-heading own-header" /> -->
+                                <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                                <!-- <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms -->
+                                    <!-- / 60000) + ' Mins' }}</Label> -->
+                                <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                                <!-- <Label v-else text="Arriving" class="list-group-item-heading own-header" /> -->
+
+                            <!-- </StackLayout> -->
+
+                        <!-- </v-template> -->
+                    <!-- </ListView> -->
+
+                    <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
+                    <!-- <Label v-else>Loading... </Label> -->
+
+                </StackLayout>
+            </TabViewItem>
+        </TabView>
+
+
 
     </Page>
 </template>
@@ -138,8 +171,8 @@
         color: #161616;
     }
 
-    StackLayout {
-        margin: 0 10;
+    .padong {
+        margin: 0 10 !important;
 
     }
 
