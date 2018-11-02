@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar :title="app.title + ' ' + app.version" class="action-bar" />
+        <ActionBar :title="'Bus Timings For: ' + busstopnumber" class="action-bar" />
 
         <StackLayout>
             <!--Add your page content here-->
@@ -77,8 +77,8 @@
         },
 
         mounted() {
-            this.app.title = appconfig.name
-            this.app.version = appconfig.version
+
+            // RUN GETBUSSTOPTIMING WITH THE BUSSTOPNUMBER PROP
             this.getBusStopTiming(this.busstopnumber)
         }
 

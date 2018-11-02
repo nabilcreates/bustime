@@ -42,7 +42,6 @@
 
                 loaded: {
                     busstopdata: false,
-                    busdata: false,
                 },
 
             }
@@ -62,10 +61,6 @@
                     }
 
                 )
-            },
-
-            navigateToBusTiming() {
-                this.$navigateTo(BusTiming)
             },
 
             getBusStopData() {
