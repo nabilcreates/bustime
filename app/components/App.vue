@@ -2,41 +2,46 @@
     <Page class="page">
         <ActionBar :title="app.title + ' ' + app.version" class="action-bar" />
 
-            <StackLayout class="home-panel">
-                <!--Add your page content here-->
+        <StackLayout class="home-panel">
+            <!--Add your page content here-->
 
-                <Button @tap="getBusStopData()"> Back </Button>
-                
-                <TextField v-model="input" @textChange="verifyInput()" />
-                
-                <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px"
-                    v-if="app.mode == 'search' && loaded.busstopdata">
-                    <v-template>
-                        <FlexboxLayout flexDirection="row" class="list-group-item">
-                            <Label :text="busstop.name" class="list-group-item-heading"  />
-                        </FlexboxLayout>
-                    </v-template>
-                </ListView>
+            <TextField v-model="input" @textChange="verifyInput()" />
 
-                <ListView class="list-group" for="bus in busdata.services" @itemTap="busstoptap" style="height:1250px"
-                    v-if="app.mode == 'view_bus' && loaded.busdata">
-                    <v-template>
+            <Button @tap="getBusStopData()"> Back </Button>
 
-                        <StackLayout flexDirection="row" class="list-group-item">
-                            <Label :text="bus.no" class="list-group-item-heading"  />
-                            <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading" >{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
-                            <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                            <Label v-else text="Arriving" class="list-group-item-heading"  />
+            <ListView class="list-group" for="busstop in busstopdata" @itemTap="busstoptap" style="height:1250px" v-if="app.mode == 'search' && loaded.busstopdata">
+                <v-template>
+                    <StackLayout flexDirection="row" class="list-group-item">
 
-                        </StackLayout>
+                        <!-- BUS STOP NAME -->
+                        <Label :text="busstop.name" class="list-group-item-heading own-header" />
 
-                    </v-template>
-                </ListView>
-                <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-                <Label v-else>Loading... </Label>
+                        <!-- BUS STOP NUMBER -->
+                        <Label :text="busstop.no" class="list-group-item-heading" />
 
-            </StackLayout>
+                    </StackLayout>
+                </v-template>
+            </ListView>
+
+            <ListView class="list-group" for="bus in busdata.services" style="height:1250px" v-if="app.mode == 'view_bus' && loaded.busdata">
+                <v-template>
+
+                    <StackLayout flexDirection="row" class="list-group-item">
+                        <Label :text="bus.no" class="list-group-item-heading own-header" />
+                        <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                        <Label v-if="Math.floor(bus.next.duration_ms / 60000) > 1" class="list-group-item-heading">{{Math.floor(bus.next.duration_ms
+                            / 60000) + ' Mins' }}</Label>
+                        <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                        <Label v-else text="Arriving" class="list-group-item-heading" />
+
+                    </StackLayout>
+
+                </v-template>
+            </ListView>
+            <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
+            <Label v-else>Loading... </Label>
+
+        </StackLayout>
 
     </Page>
 </template>
@@ -69,14 +74,14 @@
 
         methods: {
 
-            verifyInput(){
-                if(this.input == ""){
+            verifyInput() {
+                if (this.input == "") {
                     this.getBusStopData()
-                }else{
+                } else {
                     this.getBusStopTiming(this.input)
                 }
             },
-            
+
             getBusStopData() {
 
                 this.app.mode = "search"
@@ -123,9 +128,9 @@
 </script>
 
 <style scoped>
-
-    StackLayout{
+    StackLayout {
         color: white;
+        background: #161616;
     }
 
     ActionBar {
@@ -133,10 +138,14 @@
         color: #ffffff;
     }
 
-    .message {
-        vertical-align: center;
-        text-align: center;
-        font-size: 20;
-        color: #333333;
+    Button {
+        background-color: #53ba82;
+        border-radius: 1000;
+        color: #161616;
+    }
+
+    .own-header {
+        color: #53ba82;
+        font-weight: 700;
     }
 </style>
