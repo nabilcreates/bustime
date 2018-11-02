@@ -2,9 +2,12 @@
 
 > Bus Timing App 
 
-# Features
--   All Bus Stop Data (Gets all the bus stop data)
--   Fast & Simple
+
+# Branches
+- master
+  - Dont worry, this branch is steady (with minimal bugs)
+- @vexperimental branch
+   - vexperimental stands for very experimental in which case SHOULD NOT BE MERGED WITH MASTER UNLESS A FIX OR THE BRANCH IS STEADY! App version ending with @vxp is under the @vexperimental branch
 
 ## Usage
 
