@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar :title="busstopname + '(' +busstopnumber + ')'" class="action-bar" />
+        <ActionBar :title="busstopname + ' (' +busstopnumber + ')'" class="action-bar" />
         <ActionBar v-if="!busstopname" :title="'(' +busstopnumber + ')'" class="action-bar" />
 
 
