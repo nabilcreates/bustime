@@ -128,9 +128,14 @@
 </script>
 
 <style scoped>
+    Page {
+        background: #161616;
+
+    }
+
     StackLayout {
         color: white;
-        background: #161616;
+        margin: 0 5;
     }
 
     ActionBar {
