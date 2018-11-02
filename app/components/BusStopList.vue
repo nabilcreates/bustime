@@ -111,7 +111,7 @@
 
     .own-header {
         color: #e24747;
-        font-size: 18;
+        font-size: 23;
         font-weight: 700;
     }
 
