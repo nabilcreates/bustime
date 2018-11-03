@@ -30,6 +30,7 @@
 </template>
 
 <script>
+    
     var appconfig = require("../package.json")
     import BusInfo from './BusInfo.vue'
     import BusTiming from './BusTiming.vue'
@@ -59,7 +60,7 @@
         methods: {
 
             getBusRoutes(number) {
-
+                
                 console.log(number)
 
                 this.app.mode = "view_bus"

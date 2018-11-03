@@ -8,14 +8,28 @@
             <TextField v-model="input" hint="Enter a bus stop code" />
 
             <!-- BUTTON -->
-            <Button @tap="navigateToBusTiming(input)"> Get Bus Stop Times </Button>
-            <Button @tap="navigateToBusRoutes()"> Get Bus Routes </Button>
+            <Button @tap="verifyInputBusTiming()"> Get Bus Stop Times </Button>
+            <Button @tap="verifyInputBusRoutes()"> Get Bus Routes </Button>
 
             <Label class="or-divider"> OR </Label>
-            
+
             <Button @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
+            <!-- CLEAR HISTORY -->
+            <Button @tap="clearHistory()"> Clear History </Button>
 
+            <!-- HISTORY LISTVIEW -->
+            <ListView class="list-group" for="hist in history" @itemTap="tapHistory" style="height:1250px">
+                <v-template>
+                    <StackLayout flexDirection="row" class="list-group-item">
+
+                        <!-- BUS STOP NAME -->
+                        <Label :text="hist.input" class="list-group-item-heading own-header" />
+                        <Label :text="hist.type" class="list-group-item-heading" />
+
+                    </StackLayout>
+                </v-template>
+            </ListView>
 
         </StackLayout>
 
@@ -41,6 +55,8 @@
 
                 input: "",
 
+                history: [],
+
                 components: {
                     BusStopList,
                 }
@@ -50,7 +66,63 @@
 
         methods: {
 
+            // centeralize(){
+            //     var inputstr = this.input.toString()
+
+            //     if(inputstr.length = 5){
+            //         this.navigateToBusTiming(this.input)
+            //     }else{
+            //         this.navigateToBusRoutes(this.input)
+            //     }
+                
+            // },
+            
+            tapHistory(args) {
+                
+                switch (this.history[args.index].spid) {
+                    case 0:
+                        this.navigateToBusTiming(this.history[args.index].input)    
+                        break;
+
+                    case 1:
+                        this.navigateToBusRoutes(this.history[args.index].input)
+                        break;
+                    
+                    default:
+                        break;
+                }
+                
+
+            },
+
+            clearHistory() {
+                this.history = []
+            },
+
+            verifyInputBusTiming() {
+
+                console.log("verify")
+                console.log(this.input)
+
+                // SPID STANDS FOR SPECIAL ID TO MAKE SURE IF ITS GETTING BUS ROUTE OR GETTING BUS STOP TIMING
+                // 0 FOR BUS STOP TIMING
+                // 1 FOR BUS ROUTES
+
+                this.history.push({
+                    input: this.input,
+                    type: "Bus Stop Timing",
+                    spid: 0,
+                })
+
+                this.navigateToBusTiming(this.input)
+
+            },
+
             navigateToBusTiming(busstop) {
+
+                console.log("bustiming")
+                console.log(busstop)
+
                 this.$navigateTo(BusTiming, {
                     props: {
                         'busstopnumber': busstop,
@@ -58,19 +130,34 @@
                 })
             },
 
-            navigateToBusStopList(){
+            navigateToBusStopList() {
                 this.$navigateTo(BusStopList)
             },
-            
+
             getAppInfo() {
                 this.app.title = appconfig.name
                 this.app.version = appconfig.version
             },
 
-            navigateToBusRoutes(){
-                this.$navigateTo(BusRoutes , {
+            verifyInputBusRoutes() {
+
+                // SPID STANDS FOR SPECIAL ID TO MAKE SURE IF ITS GETTING BUS ROUTE OR GETTING BUS STOP TIMING
+                // 0 FOR BUS STOP TIMING
+                // 1 FOR BUS ROUTES
+
+                this.history.push({
+                    input: this.input,
+                    type: "Bus Route",
+                    spid: 1,
+                })
+
+                this.navigateToBusRoutes(this.input)
+            },
+
+            navigateToBusRoutes(number) {
+                this.$navigateTo(BusRoutes, {
                     props: {
-                        'busnumber': this.input
+                        'busnumber': number
                     }
                 })
             }
@@ -120,8 +207,7 @@
     }
 
 
-    .or-divider{
+    .or-divider {
         text-align: center;
     }
-    
 </style>
