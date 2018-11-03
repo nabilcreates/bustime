@@ -9,9 +9,12 @@
 
             <Button @tap="refreshList">Refresh</Button>
 
+            
             <StackLayout v-if="loaded.busdata">
 
-                <!-- DISPLAY BUS NUMBER -->
+            <!-- BUTTON WITH BUS NUMBER IN OT -->
+            <Button @tap="navigateToBusRoute">{{busdata.services[index].no}}</Button>
+
                 <Label text="1st Bus" class="list-group-item-heading own-header" />
 
                 <!-- BUS TIMING -->
@@ -90,7 +93,8 @@
 
 <script>
     var appconfig = require("../package.json")
-
+    import BusRoutes from './BusRoutes.vue'
+    
     export default {
 
         props: ['busstopnumber', 'index'],
@@ -141,8 +145,15 @@
                 setTimeout(function () {
                     pullRefresh.refreshing = false;
                 }, 1000);
-            }
+            },
 
+            navigateToBusRoute(){
+                this.$navigateTo(BusRoutes , {
+                    props: {
+                        'busnumber': this.busdata.services[this.index].no
+                    }
+                })
+            }
 
         },
 
@@ -189,4 +200,9 @@
     TextField {
         margin: 5 0;
     }
+
+    .big{
+        font-size: 30;
+    }
+    
 </style>

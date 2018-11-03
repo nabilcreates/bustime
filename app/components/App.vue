@@ -8,11 +8,14 @@
             <TextField v-model="input" hint="Enter a bus stop code" />
 
             <!-- BUTTON -->
-            <Button @tap="navigateToBusTiming(input)"> Get Bus Times </Button>
+            <Button @tap="navigateToBusTiming(input)"> Get Bus Stop Times </Button>
+            <Button @tap="navigateToBusRoutes()"> Get Bus Routes </Button>
 
             <Label class="or-divider"> OR </Label>
             
             <Button @tap="navigateToBusStopList()"> Bus Stop List </Button>
+
+
 
         </StackLayout>
 
@@ -24,6 +27,7 @@
 
     import BusStopList from './BusStopList.vue'
     import BusTiming from './BusTiming.vue'
+    import BusRoutes from './BusRoutes.vue'
 
     export default {
         data() {
@@ -61,6 +65,14 @@
             getAppInfo() {
                 this.app.title = appconfig.name
                 this.app.version = appconfig.version
+            },
+
+            navigateToBusRoutes(){
+                this.$navigateTo(BusRoutes , {
+                    props: {
+                        'busnumber': this.input
+                    }
+                })
             }
 
         },
