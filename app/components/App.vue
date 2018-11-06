@@ -5,7 +5,7 @@
         <StackLayout>
             <!--Add your page content here-->
 
-            <TextField v-model="input" hint="Enter" />
+            <TextField v-model="input" hint="Enter search term (Bus Stop Name / Bus Stop Code)" />
 
             <GridLayout columns='*,*' rows='*' height='45'>
 
