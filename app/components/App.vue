@@ -48,7 +48,9 @@
 
                 components: {
                     BusStopList,
-                }
+                },
+
+                history: [],
 
             }
         },
@@ -103,6 +105,9 @@
                     })
 
                 }
+
+                this.input = ''
+                this.history.push(input)
                 
             }
 
