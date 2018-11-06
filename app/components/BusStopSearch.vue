@@ -4,8 +4,6 @@
 
         <StackLayout>
 
-            <Label>{{'Has Results: ' + searchFilter.length === 0}}</Label>
-            
             <ListView class="list-group" for="busstop in searchFilter" @itemTap="busstoptap" style="height:1250px" v-if="loaded.busstopdata">
                 <v-template>
                     <StackLayout flexDirection="row" class="list-group-item">
