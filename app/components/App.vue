@@ -16,6 +16,7 @@
 
             <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
+            <Label textWrap='true'>This is your search history:</Label>
             <ListView class="list-group" for="item in history" @itemTap="tapHistory" style="height:1250px">
                 <v-template>
                     <StackLayout class="list-group-item">
@@ -96,7 +97,12 @@
 
             navigateToBusCodeSearchPage(input){
 
-                this.history.push(input)
+                // NOT FOUND IN HISTORY ARRAY
+                if(this.history.indexOf(input) < 0){
+
+                    // PUSH IT
+                    this.history.push(input)
+                }
                 
                 this.$navigateTo(BusCodeSearchVue, {
                     props: {
@@ -108,7 +114,12 @@
 
             navigateToBusStopSearchPage(input){
 
-                this.history.push(input)
+                // NOT FOUND IN HISTORY ARRAY
+                if(this.history.indexOf(input) < 0){
+
+                    // PUSH IT
+                    this.history.push(input)
+                }
                 
                 this.$navigateTo(BusStopSearchVue, {
                     props: {
