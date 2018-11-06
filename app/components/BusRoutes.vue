@@ -6,6 +6,8 @@
         <!-- <PullToRefresh @refresh="refreshList"> -->
         <StackLayout>
 
+            <Label :text='busstopnames' />
+
             <ListView class="list-group" for="bus in busroute[1].stops" @itemTap="tapBusStopCode" v-if="app.mode == 'view_bus' && loaded.busroute">
                 <v-template>
 
@@ -30,11 +32,10 @@
 </template>
 
 <script>
-    
     var appconfig = require("../package.json")
     import BusInfo from './BusInfo.vue'
     import BusTiming from './BusTiming.vue'
-    
+
     export default {
 
         props: ['busnumber'],
@@ -49,6 +50,7 @@
                 },
 
                 busroute: [],
+                busstopnames: [],
 
                 loaded: {
                     busroute: false,
@@ -60,7 +62,7 @@
         methods: {
 
             getBusRoutes(number) {
-                
+
                 console.log(number)
 
                 this.app.mode = "view_bus"
@@ -74,15 +76,17 @@
                         this.busroute = json
                         this.loaded.busroute = true
 
+
                     })
             },
 
-            tapBusStopCode(args){
+
+            tapBusStopCode(args) {
                 var index = args.index
                 // console.log(args.index)
                 console.log(this.busroute[1].stops[args.index])
 
-                this.$navigateTo(BusTiming , {
+                this.$navigateTo(BusTiming, {
                     props: {
                         'busstopnumber': this.busroute[1].stops[args.index]
                     }
@@ -95,6 +99,8 @@
 
             // RUN getBusRoutes WITH THE busnumber PROP to uppercase
             this.getBusRoutes(this.busnumber.toUpperCase())
+
+
         }
 
     }

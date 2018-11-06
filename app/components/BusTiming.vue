@@ -1,47 +1,49 @@
 <template>
     <Page>
-        <ActionBar :title="busstopname + ' (' +busstopnumber + ')'" class="action-bar" />
-        <ActionBar v-if="!busstopname" :title="'(' +busstopnumber + ')'" class="action-bar" />
-
+        <ActionBar :title="'Bus Stop'" class="action-bar" />
 
         <!-- <PullToRefresh @refresh="refreshList"> -->
-            <StackLayout>
+        <StackLayout>
 
-                <Button @tap="refreshList">Refresh</Button>
-                
-                <ListView class="list-group" for="bus in busdata.services" @itemTap="tapBus" v-if="app.mode == 'view_bus' && loaded.busdata">
-                    <v-template>
+            <Button @tap="refreshList">Refresh</Button>
 
-                        <StackLayout class="list-group-item">
-
-                            <!-- DISPLAY BUS NUMBER -->
-                            <Label :text="bus.no" class="list-group-item-heading own-header" />
-
-                            <!-- BUS TIMING -->
-                            <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
-                            <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                            <Label v-else text="🕗 Arriving" class="list-group-item-heading" />
-
-                            <!-- BUS FEATURE -->
-                            <Label v-if="bus.next.feature == 'WAB'" textWrap="true" class="list-group-item-heading">☑️ Wheelchair </Label>
-                            <Label v-else textWrap="true" class="list-group-item-heading">❎ Wheelchair </Label>
-
-                            <!-- BUS TYPE (SINGLE DECK OR DOUBLE DECK) -->
-                            <!-- SHOW SINGLE DECK IF BUS.NEXT.TYPE IS SD -->
-                            <Label v-if="bus.next.type == 'SD'" textWrap="true" class="list-group-item-heading">🚌 Single Deck</Label>
-                            <!-- SHOW DOUBLE DECK IF BUS.NEXT.TYPE IS DD -->
-                            <Label v-if="bus.next.type == 'DD'" textWrap="true" class="list-group-item-heading">🚌 Double Deck</Label>
+            <Label v-if='loaded.busstopname' :text="busstopname[0].name" class="list-group-item-heading own-header" />
 
 
-                        </StackLayout>
+            <ListView class="list-group" for="bus in busdata.services" @itemTap="tapBus" v-if="app.mode == 'view_bus' && loaded.busdata">
+                <v-template>
 
-                    </v-template>
-                </ListView>
+                    <StackLayout class="list-group-item">
 
-                <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-                <Label v-else>Loading...</Label>
-            </StackLayout>
+
+                        <!-- DISPLAY BUS NUMBER -->
+                        <Label :text="bus.no" class="list-group-item-heading own-header" />
+
+                        <!-- BUS TIMING -->
+                        <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                        <Label v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
+                        <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                        <Label v-else text="🕗 Arriving" class="list-group-item-heading" />
+
+                        <!-- BUS FEATURE -->
+                        <Label v-if="bus.next.feature == 'WAB'" textWrap="true" class="list-group-item-heading">☑️ Wheelchair </Label>
+                        <Label v-else textWrap="true" class="list-group-item-heading">❎ Wheelchair </Label>
+
+                        <!-- BUS TYPE (SINGLE DECK OR DOUBLE DECK) -->
+                        <!-- SHOW SINGLE DECK IF BUS.NEXT.TYPE IS SD -->
+                        <Label v-if="bus.next.type == 'SD'" textWrap="true" class="list-group-item-heading">🚌 Single Deck</Label>
+                        <!-- SHOW DOUBLE DECK IF BUS.NEXT.TYPE IS DD -->
+                        <Label v-if="bus.next.type == 'DD'" textWrap="true" class="list-group-item-heading">🚌 Double Deck</Label>
+
+
+                    </StackLayout>
+
+                </v-template>
+            </ListView>
+
+            <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
+            <Label v-else>Loading...</Label>
+        </StackLayout>
         <!-- </PullToRefresh> -->
 
 
@@ -52,11 +54,11 @@
 <script>
     var appconfig = require("../package.json")
     import BusInfo from './BusInfo.vue'
-import BusInfoVue from './BusInfo.vue';
+    import BusInfoVue from './BusInfo.vue';
 
     export default {
 
-        props: ['busstopnumber', 'busstopname'],
+        props: ['busstopnumber'],
 
         data() {
             return {
@@ -71,24 +73,28 @@ import BusInfoVue from './BusInfo.vue';
 
                 loaded: {
                     busdata: false,
+                    busstopname: false,
                 },
+
+                busstopname: '',
+
 
             }
         },
 
         methods: {
 
-            tapBus(args){
+            tapBus(args) {
                 console.log(args.index)
 
-                this.$navigateTo(BusInfo , {
+                this.$navigateTo(BusInfo, {
                     props: {
                         'busstopnumber': this.busstopnumber,
                         'index': args.index,
                     }
                 })
             },
-            
+
             getBusStopTiming(number) {
 
                 console.log(number)
@@ -114,6 +120,19 @@ import BusInfoVue from './BusInfo.vue';
                 setTimeout(function () {
                     pullRefresh.refreshing = false;
                 }, 1000);
+            },
+
+            getBusStopName(busstopnumber) {
+                fetch("https://busrouter.sg/data/2/bus-stops.json")
+                    .then(res => res.json())
+                    .then(json => {
+                        this.busstopname = json.filter(data => {
+                            return data.no.match(busstopnumber)
+                        })
+
+                        this.loaded.busstopname = true;
+
+                    })
             }
 
 
@@ -123,6 +142,8 @@ import BusInfoVue from './BusInfo.vue';
 
             // RUN GETBUSSTOPTIMING WITH THE BUSSTOPNUMBER PROP
             this.getBusStopTiming(this.busstopnumber)
+            this.getBusStopName(this.busstopnumber)
+            console.log('Here:', this.busstopname)
         }
 
     }

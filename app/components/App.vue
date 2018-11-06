@@ -5,18 +5,19 @@
         <StackLayout>
             <!--Add your page content here-->
 
-            <TextField v-model="input" hint="Enter a bus stop code" />
+            <TextField v-model="input" hint="Enter" />
 
             <!-- BUTTON -->
-            <Button @tap="verifyInputBusTiming()"> Get Bus Stop Times </Button>
-            <Button @tap="verifyInputBusRoutes()"> Get Bus Routes </Button>
 
-            <Label class="or-divider"> OR </Label>
 
-            <Button @tap="navigateToBusStopList()"> Bus Stop List </Button>
+            <Label text='Search:' />
+            <GridLayout columns='*,*' rows='*' height='50'>
+                <Button col='0' row='0' @tap="navigateToSearchTerm(input)"> By Name </Button>
+                <Button col='1' row='0' @tap="navigateToBusCodeSearch(input)"> By Code</Button>
+            </GridLayout>
 
-            <!-- CLEAR HISTORY -->
-            <Button @tap="clearHistory()"> Clear History </Button>
+            <Label text='Others:' />
+            <Button col='2' row='1' @tap="navigateToBusStopList()"> Stop List </Button>
 
             <!-- HISTORY LISTVIEW -->
             <ListView class="list-group" for="hist in history" @itemTap="tapHistory" style="height:1250px">
@@ -42,6 +43,8 @@
     import BusStopList from './BusStopList.vue'
     import BusTiming from './BusTiming.vue'
     import BusRoutes from './BusRoutes.vue'
+    import BusStopSearchVue from './BusStopSearch.vue';
+    import BusCodeSearchVue from './BusCodeSearch.vue';
 
     export default {
         data() {
@@ -55,8 +58,6 @@
 
                 input: "",
 
-                history: [],
-
                 components: {
                     BusStopList,
                 }
@@ -65,58 +66,6 @@
         },
 
         methods: {
-
-            // centeralize(){
-            //     var inputstr = this.input.toString()
-
-            //     if(inputstr.length = 5){
-            //         this.navigateToBusTiming(this.input)
-            //     }else{
-            //         this.navigateToBusRoutes(this.input)
-            //     }
-                
-            // },
-            
-            tapHistory(args) {
-                
-                switch (this.history[args.index].spid) {
-                    case 0:
-                        this.navigateToBusTiming(this.history[args.index].input)    
-                        break;
-
-                    case 1:
-                        this.navigateToBusRoutes(this.history[args.index].input)
-                        break;
-                    
-                    default:
-                        break;
-                }
-                
-
-            },
-
-            clearHistory() {
-                this.history = []
-            },
-
-            verifyInputBusTiming() {
-
-                console.log("verify")
-                console.log(this.input)
-
-                // SPID STANDS FOR SPECIAL ID TO MAKE SURE IF ITS GETTING BUS ROUTE OR GETTING BUS STOP TIMING
-                // 0 FOR BUS STOP TIMING
-                // 1 FOR BUS ROUTES
-
-                this.history.push({
-                    input: this.input,
-                    type: "Bus Stop Timing",
-                    spid: 0,
-                })
-
-                this.navigateToBusTiming(this.input)
-
-            },
 
             navigateToBusTiming(busstop) {
 
@@ -130,6 +79,13 @@
                 })
             },
 
+            navigateToBusRoutes(number) {
+                this.$navigateTo(BusRoutes, {
+                    props: {
+                        'busnumber': number
+                    }
+                })
+            },
             navigateToBusStopList() {
                 this.$navigateTo(BusStopList)
             },
@@ -139,25 +95,22 @@
                 this.app.version = appconfig.version
             },
 
-            verifyInputBusRoutes() {
 
-                // SPID STANDS FOR SPECIAL ID TO MAKE SURE IF ITS GETTING BUS ROUTE OR GETTING BUS STOP TIMING
-                // 0 FOR BUS STOP TIMING
-                // 1 FOR BUS ROUTES
+            navigateToSearchTerm(input) {
 
-                this.history.push({
-                    input: this.input,
-                    type: "Bus Route",
-                    spid: 1,
+                console.log(input)
+
+                this.$navigateTo(BusStopSearchVue, {
+                    props: {
+                        searchterm: input,
+                    }
                 })
-
-                this.navigateToBusRoutes(this.input)
             },
 
-            navigateToBusRoutes(number) {
-                this.$navigateTo(BusRoutes, {
+            navigateToBusCodeSearch(input) {
+                this.$navigateTo(BusCodeSearchVue, {
                     props: {
-                        'busnumber': number
+                        searchterm: input,
                     }
                 })
             }
@@ -189,7 +142,6 @@
     }
 
     Button {
-        margin: 10 0;
         color: white;
         background-color: #e24747;
         border-radius: 1000;
