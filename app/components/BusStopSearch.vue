@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar title="Bus Stop List" class="action-bar" />
+        <ActionBar title="Search (By Name)" class="action-bar" />
 
         <StackLayout>
 
