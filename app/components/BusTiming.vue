@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar :title="'Bus Stop'" class="action-bar" />
+        <ActionBar :title="busstopnumber" class="action-bar" />
 
         <!-- <PullToRefresh @refresh="refreshList"> -->
         <StackLayout>
