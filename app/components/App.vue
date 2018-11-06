@@ -7,18 +7,27 @@
 
             <TextField v-model="input" hint="Enter" />
 
-            <ListPicker :items="['Bus Stop' , 'Stop Code']" v-model="selectedItem" />
-            
             <GridLayout columns='*,*' rows='*' height='45'>
 
-                <Button col='0' row='0' @tap="navigateToSearchPage(input)">Search </Button>
-                <!-- BUTTON -->
-                <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
+                <Button col='0' row='0' @tap="navigateToBusStopSearchPage(input)">Bus Stop </Button>
+                <Button col='1' row='0' @tap="navigateToBusCodeSearchPage(input)">Stop Code </Button>
 
             </GridLayout>
+            
+            <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
             <Label v-for='item in history' :key='item' :text='item' />
 
+            <ListView class="list-group" for="item in history" @itemTap="tapHistory" style="height:1250px">
+                <v-template>
+                    <StackLayout class="list-group-item">
+
+                        <!-- HISTORU -->
+                        <Label :text="item" class="list-group-item-heading" />
+
+                    </StackLayout>
+                </v-template>
+            </ListView>
 
         </StackLayout>
 
@@ -87,30 +96,31 @@
                 this.app.version = appconfig.version
             },
 
+            navigateToBusCodeSearchPage(input){
 
-            navigateToSearchPage(input) {
-
-                console.log(this.selectedItem)
-
-                // IF THE SELECTED ITEM INDEX IS 0 [BUS STOP]
-                if(this.selectedItem == 0){
-                    this.$navigateTo(BusStopSearchVue , {
-                        props: {
-                            searchterm: input
-                        }
-                    })
-                }else{
-                    this.$navigateTo(BusCodeSearchVue, {
-                        props: {
-                            searchterm: input,
-                        }
-                    })
-
-                }
-
-                this.input = ''
                 this.history.push(input)
                 
+                this.$navigateTo(BusCodeSearchVue, {
+                    props: {
+                        searchterm: input,
+                    }
+                })
+
+            },
+
+            navigateToBusStopSearchPage(input){
+
+                this.history.push(input)
+                
+                this.$navigateTo(BusStopSearchVue, {
+                    props: {
+                        searchterm: input
+                    }
+                })
+            },
+
+            tapHistory(args){
+                this.input = this.history[args.index]
             }
 
         },
