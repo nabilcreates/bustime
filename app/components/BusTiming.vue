@@ -12,19 +12,19 @@
 
                             <!-- BUS TIMING -->
                             <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label row='1' col='0' v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
+                            <Label row='1' col='0' v-if="bus.next.duration_ms > 0" class="list-group-item-heading">🕗{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
                             <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
                             <Label row='1' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
 
                             <!-- BUS TIMING -->
                             <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label row='2' col='0' v-if="Math.floor(bus.next2.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next2.duration_ms / 60000) + ' Mins' }}</Label>
+                            <Label row='2' col='0' v-if="bus.next2.duration_ms  > 0" class="list-group-item-heading">🕗{{Math.floor(bus.next2.duration_ms / 60000) + ' Mins' }}</Label>
                             <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
                             <Label row='2' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
 
                             <!-- BUS TIMING -->
                             <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                            <Label row='3' col='0' v-if="Math.floor(bus.next3.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next3.duration_ms / 60000) + ' Mins' }}</Label>
+                            <Label row='3' col='0' v-if="bus.next3.duration_ms > 0" class="list-group-item-heading">🕗{{Math.floor(bus.next3.duration_ms / 60000) + ' Mins' }}</Label>
                             <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
                             <Label row='3' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
                         </GridLayout>
