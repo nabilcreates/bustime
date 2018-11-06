@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar :title="'Bus Info'" class="action-bar" />
+        <ActionBar :title="'Timing For Subsequent Buses'" class="action-bar" />
 
 
         <!-- <PullToRefresh @refresh="refreshList"> -->
