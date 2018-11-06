@@ -7,14 +7,14 @@
 
             <TextField v-model="input" hint="Enter" />
 
-            <Button col='0' row='0' @tap="navigateToSearchPage(input)">Search </Button>
+            <GridLayout columns='*,*' rows='*' height='45'>
 
-            <!-- BUTTON -->
+                <Button col='0' row='0' @tap="navigateToSearchPage(input)">Search </Button>
+                <!-- BUTTON -->
+                <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
+            </GridLayout>
 
-
-            <Label text='Others:' />
-            <Button col='2' row='1' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
         </StackLayout>
 
@@ -81,7 +81,7 @@
             },
 
 
-            navigateToSearchPage(input){
+            navigateToSearchPage(input) {
                 this.$navigateTo(SearchPageVue, {
                     props: {
                         searchterm: input,
