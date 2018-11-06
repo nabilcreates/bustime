@@ -17,6 +17,8 @@
 
             </GridLayout>
 
+            <Label v-for='item in history' :key='item' :text='item' />
+
 
         </StackLayout>
 
