@@ -2,51 +2,38 @@
     <Page>
         <ActionBar :title="busstopnumber" class="action-bar" />
 
-        <!-- <PullToRefresh @refresh="refreshList"> -->
         <StackLayout>
+            <PullToRefresh @refresh="refreshList">
+                <ListView class="list-group" for="bus in busdata.services" @itemTap="tapBus">
+                    <v-template>
+                        <GridLayout rows='*,*,*,*' columns='*' class="list-group-item">
+                            <!-- DISPLAY BUS NUMBER -->
+                            <Label row='0' col='0' :text="bus.no" class="list-group-item-heading own-header" />
 
-            <Button @tap="refreshList">Refresh</Button>
+                            <!-- BUS TIMING -->
+                            <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                            <Label row='1' col='0' v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
+                            <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                            <Label row='1' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
 
-            <Label v-if='loaded.busstopname' :text="busstopname[0].name" class="list-group-item-heading own-header" />
+                            <!-- BUS TIMING -->
+                            <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                            <Label row='2' col='0' v-if="Math.floor(bus.next2.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next2.duration_ms / 60000) + ' Mins' }}</Label>
+                            <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                            <Label row='2' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
 
+                            <!-- BUS TIMING -->
+                            <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
+                            <Label row='3' col='0' v-if="Math.floor(bus.next3.duration_ms / 60000) > -1" class="list-group-item-heading">🕗{{Math.floor(bus.next3.duration_ms / 60000) + ' Mins' }}</Label>
+                            <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
+                            <Label row='3' col='0' v-else text="🕗 Arriving" class="list-group-item-heading" />
+                        </GridLayout>
+                    </v-template>
+                </ListView>
+            </PullToRefresh>
 
-            <ListView class="list-group" for="bus in busdata.services" @itemTap="tapBus" v-if="app.mode == 'view_bus' && loaded.busdata">
-                <v-template>
-
-                    <StackLayout class="list-group-item">
-
-
-                        <!-- DISPLAY BUS NUMBER -->
-                        <Label :text="bus.no" class="list-group-item-heading own-header" />
-
-                        <!-- BUS TIMING -->
-                        <!-- DISPLAY TRUE TIME IF BUS ARRIVAL TIME IS ABOVE 1 MIN -->
-                        <Label v-if="Math.floor(bus.next.duration_ms / 60000) > -1" class="list-group-item-heading">🕗 {{Math.floor(bus.next.duration_ms / 60000) + ' Mins' }}</Label>
-                        <!-- SHOWS ARRIVING IF BUS ARRIVAL TIME IS UNDER 1 MIN -->
-                        <Label v-else text="🕗 Arriving" class="list-group-item-heading" />
-
-                        <!-- BUS FEATURE -->
-                        <Label v-if="bus.next.feature == 'WAB'" textWrap="true" class="list-group-item-heading">☑️ Wheelchair </Label>
-                        <Label v-else textWrap="true" class="list-group-item-heading">❎ Wheelchair </Label>
-
-                        <!-- BUS TYPE (SINGLE DECK OR DOUBLE DECK) -->
-                        <!-- SHOW SINGLE DECK IF BUS.NEXT.TYPE IS SD -->
-                        <Label v-if="bus.next.type == 'SD'" textWrap="true" class="list-group-item-heading">🚌 Single Deck</Label>
-                        <!-- SHOW DOUBLE DECK IF BUS.NEXT.TYPE IS DD -->
-                        <Label v-if="bus.next.type == 'DD'" textWrap="true" class="list-group-item-heading">🚌 Double Deck</Label>
-
-
-                    </StackLayout>
-
-                </v-template>
-            </ListView>
-
-            <!-- SHOWS LOADING WHILE LOADING BUS STOP DATA -->
-            <Label v-else>Loading...</Label>
         </StackLayout>
-        <!-- </PullToRefresh> -->
-
-
+            
 
     </Page>
 </template>
@@ -114,14 +101,6 @@
                     })
             },
 
-            refreshList(args) {
-                var pullRefresh = args.object;
-                this.getBusStopTiming(this.busstopnumber)
-                setTimeout(function () {
-                    pullRefresh.refreshing = false;
-                }, 1000);
-            },
-
             getBusStopName(busstopnumber) {
                 fetch("https://busrouter.sg/data/2/bus-stops.json")
                     .then(res => res.json())
@@ -133,6 +112,19 @@
                         this.loaded.busstopname = true;
 
                     })
+            },
+
+            refreshList(args) {
+
+                
+                var pullRefresh = args.object;
+
+                console.log(this.busstopnumber)
+                this.getBusStopTiming(this.busstopnumber)
+                
+                setTimeout(function () {
+                    pullRefresh.refreshing = false;
+                }, 1000);
             }
 
 

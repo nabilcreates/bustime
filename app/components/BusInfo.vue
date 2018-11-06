@@ -3,12 +3,8 @@
         <ActionBar :title="'Timing For Subsequent Buses'" class="action-bar" />
 
 
-        <!-- <PullToRefresh @refresh="refreshList"> -->
+        <PullToRefresh @refresh="refreshList">
         <StackLayout>
-
-
-            <Button @tap="refreshList">Refresh</Button>
-
             
             <StackLayout v-if="loaded.busdata">
 
@@ -84,7 +80,7 @@
             <Label v-else>Loading...</Label>
 
         </StackLayout>
-        <!-- </PullToRefresh> -->
+        </PullToRefresh>
 
 
 
