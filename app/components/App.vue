@@ -7,13 +7,13 @@
 
             <TextField v-model="input" hint="Enter search term (Bus Stop Name / Bus Stop Code)" />
 
-            <GridLayout columns='*,*' rows='*' height='45'>
+            <GridLayout columns='*,*,*' rows='*' height='45'>
 
-                <Button col='0' row='0' @tap="navigateToBusStopSearchPage(input)">Bus Stop </Button>
-                <Button col='1' row='0' @tap="navigateToBusCodeSearchPage(input)">Stop Code </Button>
+                <Button col='0' row='0' @tap="navigateToBusStopSearchPage(input)">Bus Stop</Button>
+                <Button col='1' row='0' @tap="navigateToBusCodeSearchPage(input)">Stop Code</Button>
+                <Button col='2' row='0' @tap="navigateToBusRoutes(input)">Route</Button>
 
             </GridLayout>
-
             <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
             <Label textWrap='true'>This is your search history:</Label>
@@ -79,10 +79,19 @@
                 })
             },
 
-            navigateToBusRoutes(number) {
+            navigateToBusRoutes(input) {
+
+                // NOT FOUND IN HISTORY ARRAY
+                if (this.history.indexOf(input) < 0) {
+
+                    // PUSH IT
+                    this.history.push(input)
+                }
+
+
                 this.$navigateTo(BusRoutes, {
                     props: {
-                        'busnumber': number
+                        'busnumber': input
                     }
                 })
             },
@@ -95,15 +104,15 @@
                 this.app.version = appconfig.version
             },
 
-            navigateToBusCodeSearchPage(input){
+            navigateToBusCodeSearchPage(input) {
 
                 // NOT FOUND IN HISTORY ARRAY
-                if(this.history.indexOf(input) < 0){
+                if (this.history.indexOf(input) < 0) {
 
                     // PUSH IT
                     this.history.push(input)
                 }
-                
+
                 this.$navigateTo(BusCodeSearchVue, {
                     props: {
                         searchterm: input,
@@ -112,15 +121,15 @@
 
             },
 
-            navigateToBusStopSearchPage(input){
+            navigateToBusStopSearchPage(input) {
 
                 // NOT FOUND IN HISTORY ARRAY
-                if(this.history.indexOf(input) < 0){
+                if (this.history.indexOf(input) < 0) {
 
                     // PUSH IT
                     this.history.push(input)
                 }
-                
+
                 this.$navigateTo(BusStopSearchVue, {
                     props: {
                         searchterm: input
@@ -128,7 +137,7 @@
                 })
             },
 
-            tapHistory(args){
+            tapHistory(args) {
                 this.input = this.history[args.index]
             }
 
