@@ -7,6 +7,8 @@
 
             <TextField v-model="input" hint="Enter" />
 
+            <ListPicker :items="['Bus Stop' , 'Stop Code']" v-model="selectedItem" />
+            
             <GridLayout columns='*,*' rows='*' height='45'>
 
                 <Button col='0' row='0' @tap="navigateToSearchPage(input)">Search </Button>
@@ -29,7 +31,6 @@
     import BusRoutes from './BusRoutes.vue'
     import BusStopSearchVue from './BusStopSearch.vue';
     import BusCodeSearchVue from './BusCodeSearch.vue';
-    import SearchPageVue from './SearchPage.vue';
 
     export default {
         data() {
@@ -42,6 +43,8 @@
                 },
 
                 input: "",
+
+                selectedItem: "",
 
                 components: {
                     BusStopList,
@@ -82,11 +85,25 @@
 
 
             navigateToSearchPage(input) {
-                this.$navigateTo(SearchPageVue, {
-                    props: {
-                        searchterm: input,
-                    }
-                })
+
+                console.log(this.selectedItem)
+
+                // IF THE SELECTED ITEM INDEX IS 0 [BUS STOP]
+                if(this.selectedItem == 0){
+                    this.$navigateTo(BusStopSearchVue , {
+                        props: {
+                            searchterm: input
+                        }
+                    })
+                }else{
+                    this.$navigateTo(BusCodeSearchVue, {
+                        props: {
+                            searchterm: input,
+                        }
+                    })
+
+                }
+                
             }
 
         },
