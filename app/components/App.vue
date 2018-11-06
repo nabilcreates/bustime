@@ -7,14 +7,11 @@
 
             <TextField v-model="input" hint="Enter" />
 
+            <Button col='0' row='0' @tap="navigateToSearchPage(input)">Search </Button>
+
             <!-- BUTTON -->
 
 
-            <Label text='Search:' />
-            <GridLayout columns='*,*' rows='*' height='50'>
-                <Button col='0' row='0' @tap="navigateToSearchTerm(input)"> By Name </Button>
-                <Button col='1' row='0' @tap="navigateToBusCodeSearch(input)"> By Code</Button>
-            </GridLayout>
 
             <Label text='Others:' />
             <Button col='2' row='1' @tap="navigateToBusStopList()"> Bus Stop List </Button>
@@ -32,6 +29,7 @@
     import BusRoutes from './BusRoutes.vue'
     import BusStopSearchVue from './BusStopSearch.vue';
     import BusCodeSearchVue from './BusCodeSearch.vue';
+    import SearchPageVue from './SearchPage.vue';
 
     export default {
         data() {
@@ -83,19 +81,8 @@
             },
 
 
-            navigateToSearchTerm(input) {
-
-                console.log(input)
-
-                this.$navigateTo(BusStopSearchVue, {
-                    props: {
-                        searchterm: input,
-                    }
-                })
-            },
-
-            navigateToBusCodeSearch(input) {
-                this.$navigateTo(BusCodeSearchVue, {
+            navigateToSearchPage(input){
+                this.$navigateTo(SearchPageVue, {
                     props: {
                         searchterm: input,
                     }

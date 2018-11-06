@@ -4,7 +4,7 @@
 
         <StackLayout>
 
-            <ListView class="list-group" for="busstop in searchFilter" @itemTap="busstoptap" style="height:1250px" v-if="loaded.busstopdata">
+            <ListView class="list-group" for="busstop in searchFilter" @itemTap="busstoptap" style="height:1250px" v-if="loaded.busstopdata && !searchFilter == []">
                 <v-template>
                     <StackLayout flexDirection="row" class="list-group-item">
 
@@ -21,7 +21,6 @@
         </StackLayout>
 
     </Page>
-</template>
 </template>
 
 <script>
