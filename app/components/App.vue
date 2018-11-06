@@ -13,16 +13,14 @@
                 <Button col='1' row='0' @tap="navigateToBusCodeSearchPage(input)">Stop Code </Button>
 
             </GridLayout>
-            
-            <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
-            <Label v-for='item in history' :key='item' :text='item' />
+            <Button col='1' row='0' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
             <ListView class="list-group" for="item in history" @itemTap="tapHistory" style="height:1250px">
                 <v-template>
                     <StackLayout class="list-group-item">
 
-                        <!-- HISTORU -->
+                        <!-- HISTORY -->
                         <Label :text="item" class="list-group-item-heading" />
 
                     </StackLayout>
