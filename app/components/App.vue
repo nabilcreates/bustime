@@ -17,20 +17,7 @@
             </GridLayout>
 
             <Label text='Others:' />
-            <Button col='2' row='1' @tap="navigateToBusStopList()"> Stop List </Button>
-
-            <!-- HISTORY LISTVIEW -->
-            <ListView class="list-group" for="hist in history" @itemTap="tapHistory" style="height:1250px">
-                <v-template>
-                    <StackLayout flexDirection="row" class="list-group-item">
-
-                        <!-- BUS STOP NAME -->
-                        <Label :text="hist.input" class="list-group-item-heading own-header" />
-                        <Label :text="hist.type" class="list-group-item-heading" />
-
-                    </StackLayout>
-                </v-template>
-            </ListView>
+            <Button col='2' row='1' @tap="navigateToBusStopList()"> Bus Stop List </Button>
 
         </StackLayout>
 
